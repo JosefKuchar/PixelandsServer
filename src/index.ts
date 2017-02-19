@@ -4,5 +4,5 @@ import CLI from './CLI';
 
 
 new ArgumentParser();
-var server: Server = new Server();
+new Server();
 new CLI();
