@@ -1,7 +1,7 @@
 const SimplexNoise = require('simplex-noise');
 
 var simplex = new SimplexNoise(Math.random);
-
+                        //16,       16,       50,     4,       0.5,         2,         0,       0
 function generateNoiseMap(mapWidth, mapHeight, scale, octaves, persistance, lacunarity, offsetX, offsetY) {
     // TODO: Seed
     var noiseMap = Array(mapWidth).fill().map(() => Array(mapHeight).fill(0));

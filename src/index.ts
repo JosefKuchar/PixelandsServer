@@ -1,3 +1,12 @@
+import Server from './Server';
+import ArgumentParser from './ArgumentParser';
+import Loggers from './Loggers';
+
+new ArgumentParser();
+var server: Server = new Server();
+//console.log(mapGenerator.generateMap(128, 128, 64)[1][1].serialize());
+
+/*
 // Third-party modules
 const app = require('express');
 const http = require('http').Server(app);
@@ -56,4 +65,4 @@ function to1D(array3D) {
     return array;
 }
 
-require('./app/cli.js');
+require('./app/cli.js');*/
