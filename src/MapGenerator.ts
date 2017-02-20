@@ -71,4 +71,7 @@ export default class MapGenerator {
 
         return chunks;
     }
+
+    //TODO: Wave algorithm for hidden blocks detection after world generation
+    
 }
