@@ -3,6 +3,7 @@ import ArrayManipulator from './ArrayManipulator';
 import Coord2D from './Coord2D';
 import Blocks from './Blocks';
 import Chunk from './Chunk';
+import WaveAlgorithm from './WaveAlgorithm'
 
 export default class MapGenerator {
     private simplexNoise: SimplexNoise;
@@ -15,6 +16,7 @@ export default class MapGenerator {
         var voxels: number[][][];
         voxels = this.generateVoxels(width * 16, height * 16, 64);
         voxels = this.setGrass(voxels);
+        var algorithm = new WaveAlgorithm(voxels);
         var chunks = this.splitToChunks(voxels);
         return chunks;
     }
