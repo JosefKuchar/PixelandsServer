@@ -46,7 +46,6 @@ export default class Server {
         });
 
         this.io.on('connect', (socket: any) => {
-            console.log(this.world.chunks[0][0].serialize);
             socket.emit('map', this.world.chunks[0][0].serialize())
         });
     }

@@ -56,4 +56,18 @@ export default class ArrayManipulator {
 
         return serialized;
     }
+
+    public static copy3D(array: any[][][]): any[][][] {
+        var temp: any[][][] = ArrayManipulator.create3D(array.length, array[0].length, array[0][0].length, 0);
+
+        for (var x: number = 0; x < array.length; x++) {
+            for (var y: number = 0; y < array[0].length; y++) {
+                for (var z: number = 0; z < array[0][0].length; z++) {
+                    temp[x][y][z] = array[x][y][z];
+                }
+            }
+        }
+
+        return temp;
+    }
 }

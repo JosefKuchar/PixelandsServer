@@ -37,7 +37,7 @@ export default class Loader {
 
                         for(var x: number = 0; x < chunks.length; x++) {
                             for (var y: number = 0; y < chunks[0].length; y++) {
-                                world[x][y] = new Chunk(chunks[x][y].voxels);
+                                world[x][y] = new Chunk(chunks[x][y].voxels, chunks[x][y].visibleVoxels);
                             }
                         }
 

@@ -17,7 +17,8 @@ export default class MapGenerator {
         voxels = this.generateVoxels(width * 16, height * 16, 64);
         voxels = this.setGrass(voxels);
         var algorithm = new WaveAlgorithm(voxels);
-        var chunks = this.splitToChunks(voxels);
+        var visibleVoxels = algorithm.calculateVisibleVoxels();
+        var chunks = this.splitToChunks(voxels, visibleVoxels);
         return chunks;
     }
 
@@ -53,21 +54,23 @@ export default class MapGenerator {
         return voxels;
     }
 
-    private splitToChunks(voxels: number[][][]): Chunk[][] {
+    private splitToChunks(voxels: number[][][], visibleVoxels: boolean[][][]): Chunk[][] {
         var chunks: Chunk[][] = ArrayManipulator.create2D(voxels.length / 16, voxels[0].length / 16, 0);
         for (var i: number = 0; i < voxels.length / 16; i++) {
             for (var j: number = 0; j < voxels[0].length / 16; j++) {
                 var chunkData: number[][][] = ArrayManipulator.create3D(16, 16, 64, 0);
+                var visibleVoxelsData: boolean[][][] = ArrayManipulator.create3D(16, 16, 64, false);
 
                 for (var x: number = 0; x < 16; x++) {
                     for (var y: number = 0; y < 16; y++) {
                         for (var z: number = 0; z < 64; z++) {
                             chunkData[x][y][z] = voxels[x + i * 16][y + j * 16][z];
+                            visibleVoxelsData[x][y][z] = visibleVoxels[x + i * 16][y + j * 16][z];
                         }
                     }
                 }
 
-                chunks[i][j] = new Chunk(chunkData);
+                chunks[i][j] = new Chunk(chunkData, visibleVoxelsData);
             }
         }
 

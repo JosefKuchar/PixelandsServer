@@ -23,6 +23,7 @@ export default class WaveAlgorithm {
                 if (this.freeSpot(new Coord3D(x, y, 0))) {
                     return new Coord3D(x, y, 0)
                 }
+
             }
         }
     }
@@ -39,47 +40,62 @@ export default class WaveAlgorithm {
             if (this.freeSpot(new Coord3D(currentVoxel.x, currentVoxel.y, currentVoxel.z - 1))) {
                 queue.push(new Coord3D(currentVoxel.x, currentVoxel.y , currentVoxel.z - 1));
                 this.visibleVoxels[currentVoxel.x][currentVoxel.y][currentVoxel.z - 1] = true;
-            } else if (this.freeSpot(new Coord3D(currentVoxel.x - 1, currentVoxel.y, currentVoxel.z))) {
+            }
+            if (this.freeSpot(new Coord3D(currentVoxel.x - 1, currentVoxel.y, currentVoxel.z))) {
                 queue.push(new Coord3D(currentVoxel.x - 1, currentVoxel.y, currentVoxel.z));
                 this.visibleVoxels[currentVoxel.x - 1][currentVoxel.y][currentVoxel.z] = true;
-            } else if (this.freeSpot(new Coord3D(currentVoxel.x, currentVoxel.y - 1, currentVoxel.z))) {
+            }
+            if (this.freeSpot(new Coord3D(currentVoxel.x, currentVoxel.y - 1, currentVoxel.z))) {
                 queue.push(new Coord3D(currentVoxel.x, currentVoxel.y - 1, currentVoxel.z));
                 this.visibleVoxels[currentVoxel.x][currentVoxel.y - 1][currentVoxel.z] = true;
-            } else if (this.freeSpot(new Coord3D(currentVoxel.x, currentVoxel.y + 1, currentVoxel.z))) {
+            }
+            if (this.freeSpot(new Coord3D(currentVoxel.x, currentVoxel.y + 1, currentVoxel.z))) {
                 queue.push(new Coord3D(currentVoxel.x, currentVoxel.y + 1, currentVoxel.z));
                 this.visibleVoxels[currentVoxel.x][currentVoxel.y + 1][currentVoxel.z] = true;
-            } else if (this.freeSpot(new Coord3D(currentVoxel.x + 1, currentVoxel.y, currentVoxel.z))) {
+            }
+            if (this.freeSpot(new Coord3D(currentVoxel.x + 1, currentVoxel.y, currentVoxel.z))) {
                 queue.push(new Coord3D(currentVoxel.x + 1, currentVoxel.y, currentVoxel.z));
                 this.visibleVoxels[currentVoxel.x + 1][currentVoxel.y][currentVoxel.z] = true;
-            } else if (this.freeSpot(new Coord3D(currentVoxel.x, currentVoxel.y, currentVoxel.z + 1))) {
+            }
+            if (this.freeSpot(new Coord3D(currentVoxel.x, currentVoxel.y, currentVoxel.z + 1))) {
                 queue.push(new Coord3D(currentVoxel.x, currentVoxel.y, currentVoxel.z + 1));
                 this.visibleVoxels[currentVoxel.x][currentVoxel.y][currentVoxel.z + 1] = true;
             }
+
+            
         }
     }
 
     private expand(): void {
+        var temp: boolean[][][] = ArrayManipulator.copy3D(this.visibleVoxels);
         for (var x: number = 0; x < this.visibleVoxels.length; x++) {
             for (var y: number = 0; y < this.visibleVoxels[0].length; y++) {
                 for (var z: number = 0; z < this.visibleVoxels[0][0].length; z++) {
                     if (this.visibleVoxels[x][y][z] === true) {
                         if (this.validSpot(new Coord3D(x, y, z - 1))) {
-                            this.visibleVoxels[x][y][z - 1] = true;
-                        } else if (this.validSpot(new Coord3D(x, y - 1, z))) {
-                            this.visibleVoxels[x][y - 1][z] = true;
-                        } else if (this.validSpot(new Coord3D(x - 1, y, z))) {
-                            this.visibleVoxels[x - 1][y][z] = true;
-                        } else if (this.validSpot(new Coord3D(x, y, z + 1))) {
-                            this.visibleVoxels[x][y][z + 1] = true;
-                        } else if (this.validSpot(new Coord3D(x, y + 1, z))) {
-                            this.visibleVoxels[x][y + 1][z] = true;
-                        } else if (this.validSpot(new Coord3D(x + 1, y, z))) {
-                            this.visibleVoxels[x + 1][y][z] = true;
+                            temp[x][y][z - 1] = true;
+                        }
+                        if (this.validSpot(new Coord3D(x, y - 1, z))) {
+                            temp[x][y - 1][z] = true;
+                        }
+                        if (this.validSpot(new Coord3D(x - 1, y, z))) {
+                            temp[x - 1][y][z] = true;
+                        }
+                        if (this.validSpot(new Coord3D(x, y, z + 1))) {
+                            temp[x][y][z + 1] = true;
+                        }
+                        if (this.validSpot(new Coord3D(x, y + 1, z))) {
+                            temp[x][y + 1][z] = true;
+                        }
+                        if (this.validSpot(new Coord3D(x + 1, y, z))) {
+                            temp[x + 1][y][z] = true;
                         }
                     }
                 }
             }
         }
+
+        this.visibleVoxels = temp;
     }
 
     private validSpot(spot: Coord3D): boolean {
