@@ -3,7 +3,7 @@
         "module": "commonjs",
         "target": "es2017",
         "noImplicitAny": true,
-        "noImplicitThis": true,
+        "noImplicitThis": false,
         "strictNullChecks": false,
         "sourceMap": false,
         "allowJs": true
